@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fitness Trends English Lab</title>
+<style>
+:root{--bg:#f6f8f4;--card:#fff;--tx:#1d2a22;--mu:#5d6b62;--ac:#1f8a5b;--ac2:#e8f5ee;--ok:#c9f0d9;--no:#f8d0d0;--bd:#d8e0d9;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#131a16;--card:#1c261f;--tx:#e8f0ea;--mu:#9bb0a2;--ac:#4cc58b;--ac2:#22392d;--ok:#1f5a3a;--no:#6a2a2a;--bd:#2c3c32}}
+:root[data-theme="dark"]{--bg:#131a16;--card:#1c261f;--tx:#e8f0ea;--mu:#9bb0a2;--ac:#4cc58b;--ac2:#22392d;--ok:#1f5a3a;--no:#6a2a2a;--bd:#2c3c32}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{padding:20px 16px 8px;max-width:820px;margin:auto}h1{margin:0;font-size:1.6rem}header p{margin:4px 0;color:var(--mu)}
+.score{display:inline-block;background:var(--ac);color:#fff;border-radius:99px;padding:2px 14px;font-weight:700}
+nav{display:flex;gap:6px;overflow-x:auto;padding:8px 16px;max-width:820px;margin:auto}
+nav button{flex:none;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;padding:6px 10px;cursor:pointer;font-size:.85rem}
+nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+main{max-width:820px;margin:auto;padding:8px 16px 40px}
+section{display:none;background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:18px}section.on{display:block}
+h2{margin-top:0}.min{color:var(--mu);font-size:.9rem}.tip{background:var(--ac2);border-radius:10px;padding:10px 12px;margin:10px 0}
+.q{margin:14px 0;padding-bottom:10px;border-bottom:1px dashed var(--bd)}.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button,.btn{border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:10px;padding:8px 12px;cursor:pointer;font-size:1rem}
+.btn{background:var(--ac);color:#fff;border-color:var(--ac)}.opts button.ok{background:var(--ok)}.opts button.no{background:var(--no)}
+.ex{color:var(--mu);font-size:.9rem;margin:4px 0 0}.res{font-weight:700;margin-top:10px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.fc{border:1px solid var(--bd);border-radius:12px;padding:12px;min-height:90px;cursor:pointer;background:var(--ac2)}.fc b{font-size:1.05rem}.ipa{color:var(--mu);font-size:.95rem}.sp{border:0;background:none;cursor:pointer;font-size:1.1rem;padding:0 4px}.fc small{display:none;color:var(--mu)}.fc.f small{display:block}
+.read{background:var(--bg);border-radius:12px;padding:12px 14px;max-height:340px;overflow:auto}
+textarea{width:100%;min-height:150px;border-radius:10px;border:1px solid var(--bd);padding:10px;background:var(--bg);color:var(--tx);font:inherit}
+.chips span{display:inline-block;border:1px solid var(--bd);border-radius:99px;padding:1px 10px;margin:2px;font-size:.85rem}.chips span.u{background:var(--ok)}
+.big{font-size:1.2rem;font-weight:600;min-height:70px}.timer{font-size:2rem;font-weight:700;color:var(--ac)}
+</style></head><body>
+<header><h1>💪 Fitness Trends English Lab</h1>
+<p>vocabulary, reading, grammar, listening &amp; writing</p>
+<p>Points: <span class="score" id="pts">0</span> <span class="min" id="lvl"></span></p></header>
+<nav id="nav"></nav><main id="main"></main>
+<footer style="text-align:center;color:var(--mu);padding:16px 16px 32px;font-size:1.25rem;font-weight:600">Nannestad High School – Barbara Anna Zielonka</footer>
+<script>
+const $=s=>document.querySelector(s);let pts=0;
+const add=n=>{pts+=n;$('#pts').textContent=pts;$('#lvl').textContent=pts>=60?'🏆 Fitness Legend':pts>=35?'🔥 Gym Regular':pts>=15?'👟 Warming up':''};
+const sh=a=>[...a].sort(()=>Math.random()-.5);
+const V=[["misinformation","false or misleading information","Nutrition misinformation spreads fast on social media."],
+["deficiency","a lack of something your body needs","Iron deficiency can make you feel tired."],
+["restrictive","limiting what you are allowed to eat","Very restrictive diets are risky for teens."],
+["supplement","a pill or powder that adds nutrients to your diet","Take a supplement only on medical advice."],
+["recovery","the time and process of resting so your body can repair itself","Sleep is the best recovery tool."],
+["longevity","living a long and healthy life","Longevity clinics use wearables to track your data."],
+["hydration","having enough water in your body","Electrolytes help hydration after a sweaty workout."],
+["endurance","the ability to keep going for a long time","Ultra running builds amazing endurance."],
+["influencer","a person with many followers who affects what others do or buy","Some influencers are trying to sell something."],
+["mindful","thinking carefully about what you are doing","Be mindful of who is sharing the advice."]];
+const P={misinformation:'/ˌmɪsɪnfəˈmeɪʃn/',deficiency:'/dɪˈfɪʃnsi/',restrictive:'/rɪˈstrɪktɪv/',supplement:'/ˈsʌplɪmənt/',recovery:'/rɪˈkʌvəri/',longevity:'/lɒnˈdʒevəti/',hydration:'/haɪˈdreɪʃn/',endurance:'/ɪnˈdjʊərəns/',influencer:'/ˈɪnfluənsə/',mindful:'/ˈmaɪndfl/'};
+function sw(w){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w);u.lang='en-GB';u.rate=.8;speechSynthesis.speak(u)}
+const vq=sh(V).map(v=>{const o=sh([v[0],...sh(V.filter(x=>x!==v)).slice(0,3).map(x=>x[0])]);return{q:'<i>'+v[1]+'</i>',o,a:o.indexOf(v[0]),e:v[2]}});
+const TFN=['True','False','Not given'];
+const R=[
+{q:'Only 2.1% of the nutrition information on one social media platform was accurate.',a:0,e:'A 2024 MyFitnessPal survey.'},
+{q:'Teens are especially vulnerable because their bodies and identities change quickly.',a:0,e:'“Rapid changes … make teens vulnerable.”'},
+{q:'Detox diets are necessary to clean the liver and kidneys.',a:1,e:'The body detoxifies itself naturally.'},
+{q:'Dibblee says every influencer has bad intentions.',a:1,e:'She says SOME creators use science; some are selling something.'},
+{q:'Cottage cheese prices went up by 7%.',a:0,e:'Sales rose 17%, prices 7%.'},
+{q:'Intermittent fasting helps most teenagers lose weight safely.',a:2,e:'The text only says fasting is not appropriate for everyone.'}].map(x=>({...x,o:TFN}));
+const G=[
+{q:'Skipping meals can lead to vitamin ______.',o:['deficiencies','deficits','defects'],a:0},
+{q:'Social media can ______ the risk of eating disorders.',o:['rise','raise','arise'],a:1,e:'raise (something) vs rise (by itself)'},
+{q:'Always ______ a doctor before taking weight-loss drugs.',o:['consume','consist','consult'],a:2},
+{q:'Hyrox is a ______ fitness race with thousands of athletes.',o:['competitive','competition','compete'],a:0,e:'adjective before a noun'},
+{q:'Saunas help you ______ after hard training.',o:['recovery','recover','recovering'],a:1,e:'help + you + verb'},
+{q:'Detox diets are ______ because the body cleans itself.',o:['necessary','unnecessarily','unnecessary'],a:2},
+{q:'Marathon runners now look for new ways to test their ______.',o:['limits','limiting','limited'],a:0},
+{q:'A ______ diet includes lots of fish, vegetables and olive oil.',o:['Mediterranean','Median','Meditation'],a:0}];
+const F=[
+{q:'Experts say altitude training ______ more popular next year.',o:['is likely to become','will to become','is likely becoming'],a:0,e:'be likely to + verb'},
+{q:'Massage robots ______ launch in London this month.',o:['are set to','are setting','set to'],a:0,e:'be set to = will happen soon (plan)'},
+{q:'I think Hyrox ______ stay popular for a few more years.',o:['is going','will','would to'],a:1,e:'will = opinion/prediction'},
+{q:'Look at the queue outside the gym! The class ______ be full.',o:['will to','is going to','is going'],a:1,e:'be going to = evidence now'},
+{q:'Gen Z ______ to choose old-school bodybuilding in 2026.',o:['are expected','expect','will expected'],a:0,e:'be expected to'},
+{q:'If you ______ enough sleep, your recovery will improve.',o:['will get','would get','get'],a:2,e:'First conditional: if + present simple'}];
+const C=[
+{q:'The workout video went ______ overnight and millions watched it.',o:['viral','famous','public'],a:0,e:'go viral'},
+{q:'Many teenagers ______ a strict diet they see online.',o:['do','follow','make'],a:1,e:'follow a diet'},
+{q:'Influencers can ______ false information very quickly.',o:['spread','throw','carry'],a:0,e:'spread misinformation'},
+{q:'Celebrities often ______ new fitness trends.',o:['do','put','set'],a:2,e:'set a trend'},
+{q:'Experts recommend a ______ diet with fruit, vegetables and whole grains.',o:['equal','balanced','even'],a:1,e:'balanced diet'},
+{q:'Never ______ supplements without medical advice.',o:['take','eat','have'],a:0,e:'take supplements'},
+{q:'Always check that the source is ______ before you try a trend.',o:['reliant','reliance','reliable'],a:2,e:'a reliable source'},
+{q:'Some videos promise you will ______ weight in a week, which is unrealistic.',o:['lose','loose','miss'],a:0,e:'lose weight'},
+{q:'Many teens feel ______ to look perfect because of social media.',o:['pressure','pressed','pressing'],a:0,e:'feel pressure (to do something)'}];
+const L=[
+{q:'What is rising by more than one thousand percent?',o:['Gym membership','Sauna attendance','Marathon times'],a:1},
+{q:'What does the Liverpool floating sauna combine with sauna?',o:['Pilates at sunset','Book clubs','Live concerts'],a:0},
+{q:'According to the speaker, saunas lower stress because of…',o:['cold water','oxytocin','caffeine'],a:1}];
+const LT="Sauna culture is getting even hotter. According to Eventbrite, attendance at thermal gatherings is up more than one thousand percent. In Liverpool, a floating sauna pairs heat with sunset Pilates, and in Brighton you can join a sauna book club. Experts say that when you add social connection, oxytocin rises, which lowers stress and boosts your mood.";
+const SP=['Which is more useful for your health: a gym, a sports team or an app? Why?','Do you trust fitness advice on social media? How do you check if it is true?','Which trend from the lesson would you try: altitude tents, saunas, reformer Pilates or Hyrox?','Is it a good idea for teenagers to follow strict diets? Explain.','Will wearables (smart watches, rings) make people healthier? Give reasons.','What will be the next big fitness trend in your country? Predict!'];
+const TW=['misinformation','deficiency','restrictive','supplement','recovery','longevity','hydration','endurance','influencer','mindful','balanced','trend'];
+const S=[
+{t:'1 Warm-up',m:8,h:()=>`<p>Click 🔊 to hear each word and practise the pronunciation. Flip each card to learn the meaning. Then say each example sentence aloud to a partner and make <b>your own</b> sentence.</p><div class="cards">${V.map(v=>`<div class="fc" onclick="this.classList.toggle('f')"><b>${v[0]}</b><br><span class="ipa">${P[v[0]]}</span> <button class="sp" title="Listen" onclick="event.stopPropagation();sw('${v[0]}')">🔊</button><small>${v[1]}<br><i>“${v[2]}”</i></small></div>`).join('')}</div>`},
+{t:'2 Vocab',m:7,q:vq,pre:'<p>Read the definition. Choose the correct word.</p>'},
+{t:'3 Reading',m:12,q:R,pre:`<p>Read the text. Then decide: <b>True, False or Not given</b>?</p><div class="read"><p><b>Fact or Fiction? Nutrition advice online</b></p><p>Teens get nutrition advice from family, friends, health professionals and social media, but the quality varies. A 2024 survey by MyFitnessPal found that only 2.1% of nutrition information on one popular platform was accurate. The teen years are a critical time for growth, and rapid changes in body size and self-identity can make teens vulnerable to unrealistic body standards. Research suggests that social media use raises the risk of eating disorders.</p><p>Trendy diets such as keto, carnivore and intermittent fasting often lack scientific backing. Many are very restrictive and may lead to vitamin and mineral deficiencies. Detox diets are unnecessary, because the body is naturally equipped to detoxify through the liver, kidneys, lungs and skin. Experts prefer balanced eating, such as the Mediterranean diet, with fruit, vegetables, whole grains and healthy fats.</p><p>Registered dietitian Diana Dibblee warns that nearly 70% of diet advice on TikTok and Instagram is misleading. Some influencers with lots of followers “are trying to sell something”, she says, so you should ask who is sharing the information and why. Food analyst Sylvain Charlebois adds that viral trends can sometimes be healthy: cottage cheese sales went up 17% in three months because of TikTok. His advice: fact-check before you try a trend.</p></div>`},
+{t:'4 Gap-fill',m:8,q:G,pre:'<p>Choose the best word. Think about collocations and word forms.</p>'},
+{t:'5 Predictions',m:8,q:F,pre:'<div class="tip"><b>Talking about the future</b><br>• <b>will</b> + verb → opinions, predictions<br>• <b>be going to</b> → evidence now<br>• <b>be set to / be likely to / be expected to</b> → formal, news style<br>• <b>if + present, will</b> → real conditions</div>'},
+{t:'6 Listening',m:5,q:L,pre:`<p>Press play (use headphones or the class speaker). You can listen twice. Then answer.</p><button class="btn" onclick="say(1)">▶ Normal</button> <button class="btn" onclick="say(.7)">🐢 Slow</button> <button class="btn" onclick="$('#tr').hidden=false">Show transcript</button><p id="tr" hidden class="tip">${LT}</p>`},
+{t:'7 Collocations',m:8,q:C,pre:'<div class="tip"><b>Collocations</b> are words that naturally go together: <i>go viral, follow a diet, spread misinformation, set a trend, balanced diet, reliable source</i>. Learn them as chunks!</div><p>Choose the word that fits best.</p>'},
+{t:'8 Writing',m:7,h:()=>`<p><b>Task:</b> Which health or fitness trend will be biggest in your country next year? Write 80–120 words. Use at least <b>4 target words</b> and <b>2 future structures</b> (will, is likely to, is set to, is expected to).</p><div class="chips" id="ch">${TW.map(w=>`<span>${w}</span>`).join('')}</div><textarea id="wr" oninput="wc()" placeholder="Next year, … will be …"></textarea><p class="res"><span id="wn">0</span> words · <span id="wu">0</span> target words used</p><div class="tip">✅ Checklist: clear opinion · reason + example · linking words (however, because, for example) · check spelling.</div>`}];
+const nav=$('#nav'),main=$('#main');
+S.forEach((s,i)=>{const b=document.createElement('button');b.textContent=s.t+' · '+s.m+'′';b.onclick=()=>go(i);nav.append(b);
+const sec=document.createElement('section');sec.innerHTML=`<h2>${s.t.slice(2)}</h2><div class="min">⏱ about ${s.m} minutes</div>${s.pre||''}${s.h?s.h():''}`;
+if(s.q){const box=document.createElement('div');sec.append(box);quiz(box,s.q)}
+const n=document.createElement('p');n.innerHTML=i<S.length-1?`<button class="btn" onclick="go(${i+1})">Next activity →</button>`:`<div class="tip">🎉 Well done! Final score: see the points at the top. Reflection: which 3 new words will you use this week?</div>`;sec.append(n);main.append(sec)});
+function go(i){document.querySelectorAll('nav button').forEach((b,j)=>b.classList.toggle('on',i==j));document.querySelectorAll('section').forEach((s,j)=>s.classList.toggle('on',i==j));scrollTo(0,0)}
+function quiz(box,items){let d=0,c=0;const r=document.createElement('div');r.className='res';items.forEach((it,i)=>{const q=document.createElement('div');q.className='q';q.innerHTML=`<p><b>${i+1}.</b> ${it.q}</p>`;const w=document.createElement('div');w.className='opts';const x=document.createElement('p');x.className='ex';
+it.o.forEach((t,j)=>{const b=document.createElement('button');b.textContent=t;b.onclick=()=>{if(q.dataset.d)return;q.dataset.d=1;d++;const ok=j==it.a;b.classList.add(ok?'ok':'no');if(ok){c++;add(1)}else w.children[it.a].classList.add('ok');x.textContent=(ok?'✔ ':'✘ ')+(it.e||'');if(d==items.length)r.textContent=`Result: ${c}/${items.length} `+(c==items.length?'🌟 Perfect!':c>=items.length*.7?'💪 Great job!':'Keep practising!')};w.append(b)});q.append(w,x);box.append(q)});box.append(r)}
+function say(r){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(LT);u.lang='en-GB';u.rate=r;speechSynthesis.speak(u)}
+function card(){$('#card').textContent=SP[Math.floor(Math.random()*SP.length)]}
+let ti;function tmr(){clearInterval(ti);let t=120;const f=()=>{$('#tm').textContent=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')};f();ti=setInterval(()=>{t--;f();if(t<=0){clearInterval(ti);$('#tm').textContent='⏰ Switch roles!'}},1000)}
+let wd=false;function wc(){const v=$('#wr').value.toLowerCase();$('#wn').textContent=(v.match(/\b\w+\b/g)||[]).length;let u=0;document.querySelectorAll('#ch span').forEach(s=>{const h=v.includes(s.textContent);s.classList.toggle('u',h);if(h)u++});$('#wu').textContent=u;if(u>=4&&!wd){wd=true;add(5)}}
+go(0);
+</script></body></html>
